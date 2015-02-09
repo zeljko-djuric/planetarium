@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r70/three.js"></script>
+
+    <style>
+      body {
+        margin: 0;
+        overflow: none;
+        background-color: black;
+      }
+      #navigation {
+        position: absolute;
+        top: 0;
+        width: 100%;
+        height: 60px;
+        background-color: rgba(255, 255, 255, 0.23);
+      }
+      #footer {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        height: 30px;
+        background-color: rgba(255, 255, 255, 0.23);
+        color: rgba(255, 255, 255, 0.45);
+
+      }
+      #footer p {
+        text-align: center;
+        margin-top: 8px;
+      }
+      ul {
+        text-align: center;
+        margin-top: 23px;
+      }
+      li {
+        display: inline;
+        margin: 0 auto;
+        color: rgba(255, 255, 255, 0.45);
+        margin-right: 25px;
+      }
+      li:hover {
+        text-decoration: underline;
+        cursor: pointer;
+        color: white;
+      }
+      .kepler-batica {
+        margin-left: 20%;
+        margin-top: 3%;
+        display: inline;
+        width: 25%;
+
+      }
+
+      .batica {
+        display: inline;
+        width: 30%;
+        float: right;
+        margin-right: 15%;
+      }
+      .kretanje_planeta {
+        text-align: center;
+        color: rgba(255, 255, 255, 0.45);
+        line-height: 15px;
+
+        margin-left: 15%;
+margin-right: 15%;
+margin-top: 5%;
+
+      }
+
+      .kretanje_planeta p {
+        margin: 9px;
+      }
+
+      .kretanje_planeta p::first-letter {
+  font-weight: bold;
+  color: white;
+  font-size: 26px;
+}
+
+
+
+    </style>
+  </head>
+
+  <body>
+    <div id="navigation">
+      <ul>
+        <a href="index.html"><li>Планетаријум</li></a>
+        <a href="kretanje-planeta.html"><li>Кретање планета</li></a>
+        <a href="koordinatni-sistemi.html"><li>Координатни системи</li></a>
+    </div>
+    <div id="footer">
+      <p>Ефемеридска астрономија | Математички Факултет, Београд. | Жељко Ђурић и Даринка Нешовић</p>
+    </div>
+
+
+    <img src="http://upload.wikimedia.org/wikipedia/commons/b/b5/Eklipti%C4%8Dki_koordinatni_sistem.svg" class="kepler-batica"/>
+    <img src="http://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Celestial_Sphere_sr.svg/2000px-Celestial_Sphere_sr.svg.png" class="batica"/>
+    <div class = "kretanje_planeta">
+      <p> Небески координатни системи су координатни системи који се користе за описивање положаја астрономских објеката на небеској сфери. Развијен је већи број небеских координатних система, а користи се увек онај најпогоднији за описивање датог објекта или појаве.</p>
+      <p> Ови координатни системи се међусобно разликују по координатном почетку и правцима у којима су усмјерене оси. </p>
+      <p> Еклиптички координатни систем је небески координатни систем код кога је основна раван еклиптика, односно раван Земљине орбите. Координате еклитптичког координатног система су еклиптичка лонгитуда (λ) и еклиптичка латитуда (β). Центар еклиптичког координатног система могу бити Земља или Сунце. Еклиптички координатни систем је погодан за опсивање тела Сунчевог система, посебно Сунца и планета, због тога што се крећу приближно у равни еклиптике.
+         </p>
+
+      <p>Екваторски координатни систем представља систем у којем је положај небеског објекта одређен рекстацензијон и деклинацијом. Кутна удаљеност небеског екватора према небеским половима до тачке којој објекат припада представља небеску ширину тј. деклинацију (δ). Кутна удаљеност дуж небеског екватора од прољетне тачке гдје припадајући меридијан пресеца небески екватор је небеска дужина тј. рекстацензија (α) </p>
+
+
+
+      </div>
+  </body>
+</html>

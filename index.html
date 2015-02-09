@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r70/three.js"></script>
+    <script src="http://threejs.org/examples/js/controls/OrbitControls.js"></script>
+
+    <style>
+      body {
+        margin: 0;
+        overflow: none;
+      }
+      #navigation {
+        position: absolute;
+        top: 0;
+        width: 100%;
+        height: 60px;
+        background-color: rgba(255, 255, 255, 0.23);
+      }
+      #footer {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        height: 30px;
+        background-color: rgba(255, 255, 255, 0.23);
+        color: rgba(255, 255, 255, 0.45);
+
+      }
+      #footer p {
+        text-align: center;
+        margin-top: 8px;
+      }
+      ul {
+        text-align: center;
+        margin-top: 23px;
+      }
+      li {
+        display: inline;
+        margin: 0 auto;
+        color: rgba(255, 255, 255, 0.45);
+        margin-right: 25px;
+      }
+      li:hover {
+        text-decoration: underline;
+        cursor: pointer;
+        color: white;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <div id="navigation">
+      <ul>
+        <a href="index.html"><li>Планетаријум</li></a>
+        <a href="kretanje-planeta.html"><li>Кретање планета</li></a>
+        <a href="koordinatni-sistemi.html"><li>Координатни системи</li></a>
+    </div>
+    <div id="footer">
+      <p>Ефемеридска астрономија | Математички Факултет, Београд. | Жељко Ђурић и Даринка Нешовић</p>
+    </div>
+    <script>
+      var renderer, scene, camera;
+
+      var mercuryObject, venusObject, marsObject, jupiterObject, saturnObject, uranusObject, neptuneObject;
+      var theSun, theEarthAndMoon, theEarth, theMoon, theMercury, theVenus, theMars, theJupiter, theSaturn, theUranus, theNeptune;
+
+      var controls;
+
+      var earthOrbitRadius = 100,
+          earthOrbitAngle = 0,
+          earthOrbitSpeed = 0.7,
+
+          mercuryOrbitAngle = 0,
+          mercuryOrbitSpeed = 1,
+
+          venusOrbitAngle = 0,
+          venusOrbitSpeed = 0.8,
+
+          marsOrbitAngle = 0,
+          marsOrbitSpeed = 0.6,
+
+          jupiterOrbitAngle = 0,
+          jupiterOrbitSpeed = 0.5,
+
+          saturnOrbitAngle = 0,
+          saturnOrbitSpeed = 0.4,
+
+          uranusOrbitAngle = 0,
+          uranusOrbitSpeed = 0.25,
+
+          neptuneOrbitAngle = 0,
+          neptuneOrbitSpeed = 0.1,
+
+          moonOrbitRadius = 10,
+          moonOrbitAngle = 0,
+          moonOrbitSpeed = 4,
+
+          mercuryOrbitRadius = 50;
+
+      init();
+      animate();
+
+      function init() {
+        renderer = new THREE.WebGLRenderer( { clearColor: 0x000000, clearAlpha: 1 } );
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+
+        scene = new THREE.Scene();
+
+        // Na scenu dodajemo zvezde (stars)
+        texture = THREE.ImageUtils.loadTexture('galaxy_starfield.png');
+        material  = new THREE.MeshBasicMaterial({
+          map : texture,
+          side  : THREE.BackSide
+        });
+        geometry  = new THREE.SphereGeometry(2000, 32, 32);
+        var stars  = new THREE.Mesh(geometry, material);
+        scene.add(stars);
+
+        camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 10000 );
+         camera.position.set( 300, 150, 50 );
+
+
+        controls = new THREE.OrbitControls( camera );
+        controls.minDistance = 20;
+        controls.maxDistance = 10000;
+
+        var ambientLight = new THREE.AmbientLight(0x222222);
+        scene.add(ambientLight);
+
+        var light = new THREE.PointLight(0xFFFFFF, 1, 0);
+        light.position.set(0, 0, 0);
+        scene.add(light);
+
+        // Sunce
+        var geometry = new THREE.SphereGeometry(30, 200, 300);
+        var material = new THREE.MeshBasicMaterial({
+          map: THREE.ImageUtils.loadTexture( 'try.jpg' ),
+          overdraw: true
+        });
+        theSun = new THREE.Mesh(geometry, material);
+
+        scene.add(theSun);
+
+        // Zemlja i Mesec
+        theEarthAndMoon = new THREE.Object3D();
+        theEarthAndMoon.rotation.z = 23.439281 * Math.PI / 180; //tilt of earth in radians;
+        scene.add(theEarthAndMoon);
+        var axes = new THREE.AxisHelper(10);
+        theEarthAndMoon.add(axes);
+
+        var geometry = new THREE.SphereGeometry(5, 16, 15);
+        var material = new THREE.MeshBasicMaterial({
+          map: THREE.ImageUtils.loadTexture('earthmap1k.jpg'),
+          overdraw: true
+        });
+        theEarth =  new THREE.Mesh(geometry, material);
+        theEarthAndMoon.add(theEarth);
+
+        theMoon = new THREE.Mesh(new THREE.SphereGeometry(1, 16, 15),  new THREE.MeshLambertMaterial({
+            color:"white"
+        }));
+
+        theEarthAndMoon.add(theMoon);
+
+        // Merkur
+        mercuryObject = new THREE.Object3D();
+        mercuryObject.rotation.z = 23.439281 * Math.PI / 180; //tilt of earth in radians;
+        scene.add(mercuryObject);
+
+        var geometry = new THREE.SphereGeometry(2, 16, 15);
+        var material = new THREE.MeshBasicMaterial({
+          map: THREE.ImageUtils.loadTexture('mercurymap.jpg'),
+          overdraw: true
+        });
+        theMercury =  new THREE.Mesh(geometry, material);
+        mercuryObject.add(theMercury);
+
+        // Venera
+        venusObject = new THREE.Object3D();
+        venusObject.rotation.z = 23.439281 * Math.PI / 180; //tilt of earth in radians;
+        scene.add(venusObject);
+
+        var geometry = new THREE.SphereGeometry(4, 16, 15);
+        var material = new THREE.MeshBasicMaterial({
+          map: THREE.ImageUtils.loadTexture('venusmap.jpg'),
+          overdraw: true
+        });
+        theVenus =  new THREE.Mesh(geometry, material);
+
+        venusObject.add(theVenus);
+
+        // Mars
+        marsObject = new THREE.Object3D();
+        marsObject.rotation.z = 23.439281 * Math.PI / 180; //tilt of earth in radians;
+        scene.add(marsObject);
+
+        var geometry = new THREE.SphereGeometry(3, 16, 15);
+        var material = new THREE.MeshBasicMaterial({
+          map: THREE.ImageUtils.loadTexture('marsmap1k.jpg'),
+          overdraw: true
+        });
+        theMars =  new THREE.Mesh(geometry, material);
+
+        marsObject.add(theMars);
+
+        // Jupiter
+        jupiterObject = new THREE.Object3D();
+        jupiterObject.rotation.z = 23.439281 * Math.PI / 180; //tilt of earth in radians;
+        scene.add(jupiterObject);
+
+        var geometry = new THREE.SphereGeometry(10, 16, 15);
+        var material = new THREE.MeshBasicMaterial({
+          map: THREE.ImageUtils.loadTexture('jupitermap.jpg'),
+          overdraw: true
+        });
+        theJupiter =  new THREE.Mesh(geometry, material);
+
+        jupiterObject.add(theJupiter);
+
+
+        // Saturn
+        saturnObject = new THREE.Object3D();
+        saturnObject.rotation.z = 23.439281 * Math.PI / 180; //tilt of earth in radians;
+        scene.add(saturnObject);
+
+        var geometry = new THREE.SphereGeometry(10, 16, 15);
+        var material = new THREE.MeshBasicMaterial({
+          map: THREE.ImageUtils.loadTexture('saturnmap.jpg'),
+          overdraw: true
+        });
+        theSaturn =  new THREE.Mesh(geometry, material);
+
+        saturnObject.add(theSaturn);
+
+
+        // Uranus
+        uranusObject = new THREE.Object3D();
+        uranusObject.rotation.z = 23.439281 * Math.PI / 180; //tilt of earth in radians;
+        scene.add(uranusObject);
+
+        var geometry = new THREE.SphereGeometry(6, 16, 15);
+        var material = new THREE.MeshBasicMaterial({
+          map: THREE.ImageUtils.loadTexture('uranusmap.jpg'),
+          overdraw: true
+        });
+        theUranus =  new THREE.Mesh(geometry, material);
+
+        uranusObject.add(theUranus);
+
+        // Neptune
+        neptuneObject = new THREE.Object3D();
+        neptuneObject.rotation.z = 23.439281 * Math.PI / 180; //tilt of earth in radians;
+        scene.add(neptuneObject);
+
+        var geometry = new THREE.SphereGeometry(5, 16, 15);
+        var material = new THREE.MeshBasicMaterial({
+          map: THREE.ImageUtils.loadTexture('neptunemap.jpg'),
+          overdraw: true
+        });
+        theNeptune =  new THREE.Mesh(geometry, material);
+
+        neptuneObject.add(theNeptune);
+}
+
+function animate() {
+
+    requestAnimationFrame( animate );
+
+    render();
+
+}
+
+function render() {
+
+    //run the earth's orbit around the Sun
+
+    earthOrbitAngle += earthOrbitSpeed;
+    mercuryOrbitAngle += mercuryOrbitSpeed;
+    venusOrbitAngle += venusOrbitSpeed;
+    marsOrbitAngle += marsOrbitSpeed;
+    jupiterOrbitAngle += jupiterOrbitSpeed;
+    saturnOrbitAngle += saturnOrbitSpeed;
+    uranusOrbitAngle += uranusOrbitSpeed;
+    neptuneOrbitAngle += neptuneOrbitSpeed;
+
+    var radians = earthOrbitAngle * Math.PI / 180;
+    var radians2 = mercuryOrbitAngle * Math.PI / 180;
+    var radians3 = venusOrbitAngle * Math.PI / 180;
+    var radians4 = marsOrbitAngle * Math.PI / 180;
+    var radians5 = jupiterOrbitAngle * Math.PI / 180;
+    var radians6 = saturnOrbitAngle * Math.PI / 180;
+    var radians7 = uranusOrbitAngle * Math.PI / 180;
+    var radians8 = neptuneOrbitAngle * Math.PI / 180;
+
+    theEarthAndMoon.position.x = Math.cos(radians) * earthOrbitRadius;
+    theEarthAndMoon.position.z = Math.sin(radians) * earthOrbitRadius;
+
+    mercuryObject.position.x = Math.cos(radians2) * mercuryOrbitRadius;
+    mercuryObject.position.z = Math.sin(radians2) * mercuryOrbitRadius;
+
+    venusObject.position.x = Math.cos(radians3) * 70;
+    venusObject.position.z = Math.sin(radians3) * 70;
+
+    marsObject.position.x = Math.cos(radians4) * 130;
+    marsObject.position.z = Math.sin(radians4) * 130;
+
+    jupiterObject.position.x = Math.cos(radians5) * 155;
+    jupiterObject.position.z = Math.sin(radians5) * 155;
+
+    saturnObject.position.x = Math.cos(radians6) * 190;
+    saturnObject.position.z = Math.sin(radians6) * 190;
+
+    uranusObject.position.x = Math.cos(radians7) * 220;
+    uranusObject.position.z = Math.sin(radians7) * 220;
+
+    neptuneObject.position.x = Math.cos(radians8) * 250;
+    neptuneObject.position.z = Math.sin(radians8) * 250;
+
+    //run the Moon's orbit around the Earth
+    moonOrbitAngle += moonOrbitSpeed;
+    var moonRadians = moonOrbitAngle * Math.PI / 180;
+
+    theMoon.position.x = Math.cos(moonRadians) * moonOrbitRadius;
+    theMoon.position.z = Math.sin(moonRadians) * moonOrbitRadius;
+    controls.update();
+    // render
+    renderer.render( scene, camera );
+
+}
+
+
+    </script>
+  </body>
+</html>
