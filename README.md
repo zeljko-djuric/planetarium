@@ -1,1 +1,2 @@
-ovo vise nije read me file jer sam ga ja izmjenio !
+# Planetarium
+## Simulacija kretanja planeta u Suncevom sistemu
