@@ -17,9 +17,9 @@
 	```
 ######	Svaki od objekata karakterise radijus, ugao i brzina. Defisao sam rotaciju po z osi koja najbolje odgovara polozaju ######kamere koju sam takodje inijalizovao.
 
-	```
+	
 	theEarthAndMoon.rotation.z = 23.439281 * Math.PI / 180;
-	```
+	
  ###### Rotaciju po osama sam definisam uz pomoc klase koja je definisana u biblioteci Three.js i ciji je jedan od elemenata rotacija. 
 
 ######Dakle, nakon postavljanja na scenu svih objekata i definisanja osobina za svaku planetu. Ubacio sam teksture koje se mogu pronaci takodje na NASA sajtu.
@@ -29,10 +29,8 @@
 	
 ![alt text](Screenshot1.png "Logo Title Text 1")
  
-![alt text](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "Logo Title Text 1")
-Inline-style: 
-![alt text](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "Logo Title Text 1")
-Inline-style: 
-![alt text](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "Logo Title Text 1")
-
+![alt text](Screenshot2.png "Logo Title Text 1")
  
+![alt text](Screenshot3.png "Logo Title Text 1")
+
+![alt text](Screenshot4.png "Logo Title Text 1")
