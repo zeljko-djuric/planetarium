@@ -10,17 +10,17 @@
 ### Rjesenje:
 ######	Za ovakve zahtjeve potrebna je pozadinska fizika koju sam implementirao koristeci Three.js biblioteku koja ima odlicnu podrsku za sfernu geometriju koja je u astronomiji i konkretno ovome projektu od krucijalnog znacaja. Iz razloga sto je jedan od dominantnih koordinatnih sistema koji se koristi u astronomiji sferni koordinatni sistem.Velicine i brzinu kretanja plenata sam odabrao tako sto sam skalirao stvarne podatke koje se mogu pronaci na zvanicnom sajtu NASA.
 
-	```
+	
 	var earthOrbitRadius = 100,
           earthOrbitAngle = 0,
           earthOrbitSpeed = 0.7;
-	```
-######	Svaki od objekata karakterise radijus, ugao i brzina. Defisao sam rotaciju po z osi koja najbolje odgovara polozaju ######kamere koju sam takodje inijalizovao.
+	
+######	Svaki od objekata karakterise radijus, ugao i brzina. Defisao sam rotaciju po z osi koja najbolje odgovara polozaju kamere koju sam takodje inijalizovao.
 
 	
 	theEarthAndMoon.rotation.z = 23.439281 * Math.PI / 180;
 	
- ###### Rotaciju po osama sam definisam uz pomoc klase koja je definisana u biblioteci Three.js i ciji je jedan od elemenata rotacija. 
+###### Rotaciju po osama sam definisam uz pomoc klase koja je definisana u biblioteci Three.js i ciji je jedan od elemenata rotacija. 
 
 ######Dakle, nakon postavljanja na scenu svih objekata i definisanja osobina za svaku planetu. Ubacio sam teksture koje se mogu pronaci takodje na NASA sajtu.
 
@@ -34,3 +34,6 @@
 ![alt text](Screenshot3.png "Logo Title Text 1")
 
 ![alt text](Screenshot4.png "Logo Title Text 1")
+
+
+#### Pitanja, primjedbe i prijedloge mozete slati na moj mail : zeljko94@gmail.com
